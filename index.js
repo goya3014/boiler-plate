@@ -47,11 +47,12 @@ app.post('/api/users/login', (req, res) => {
     }
   //요청된 이메일이 DB에 있다면 비밀번호가 같은지 확인
   user.comparePassword(req.body.password, (err, isMatch) => {
-    if(!isMatch)
-     return res.json({ 
-       loginSuccess: false,
-        message: "비밀번호가 일치하지 않습니다." 
-      })
+    if(!isMatch){
+      return res.json({ 
+        loginSuccess: false,
+         message: "비밀번호가 일치하지 않습니다." 
+       })
+    }
        //비밀번호가 같다면 User를 위한 token 생성
   user.generateToken((err, user) => {
           //status 400: error라는 의미
@@ -79,10 +80,20 @@ app.get('/api/users/auth', auth, (req, res) => {
     role: req.user.role,
     image: req.user.image
   })
-
-
-
-
 })
  
+
+app.get('/api/users/logout', auth, (req, res) => {
+  //유저를 찾아서 업데이트 해줌. 토큰은 ""으로 지워줌.
+
+  console.log('req.user', req.user);
+  User.findOneAndUpdate({_id: req.user._id},
+     {token: ""}, 
+     (err, user) => {
+    if(err) return res.json({success: false, err});
+    return res.status(200).send({
+      success: true
+    })
+  })
+})
 

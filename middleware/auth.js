@@ -7,15 +7,16 @@ let auth = (req, res, next) => {
     //2. 토큰을 복호화 한 후 유저를 찾는다.
     User.findByToken(token, (err, user) => {
         if(err) throw err;
+        //3. 유저가 없으면 인증 실패
         if(!user) return res.json({isAuth: false, error: true})
 
+        //4. 유저가 있으면 인증 완료
         req.token = token;
         req.user = user;
         //next가 없으면 middleware에 갇혀버림.
         next();
     })
-    //3. 유저가 있으면 인증 완료
-    //4. 유저가 없으면 인증 실패
+    
 }
 
 //auth를 다른 파일에서도 쓸 수 있도록 export
