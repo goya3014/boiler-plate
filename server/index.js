@@ -86,7 +86,6 @@ app.get('/api/users/auth', auth, (req, res) => {
 app.get('/api/users/logout', auth, (req, res) => {
   //유저를 찾아서 업데이트 해줌. 토큰은 ""으로 지워줌.
 
-  console.log('req.user', req.user);
   User.findOneAndUpdate({_id: req.user._id},
      {token: ""}, 
      (err, user) => {
@@ -95,5 +94,5 @@ app.get('/api/users/logout', auth, (req, res) => {
       success: true
     })
   })
-})
+})//logout api 종료
 
