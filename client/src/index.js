@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'antd/dist/antd.css';
+
+
 //root 아이디는 index.html 파일에 있는 div임.
 ReactDOM.render(
   <React.StrictMode>
