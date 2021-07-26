@@ -39,7 +39,6 @@ const userSchema = mongoose.Schema({
 userSchema.pre('save', function(next){    
     //위의 이름, 이메일 등의 스키마들을 가져옴.
     var user = this;
-
     //비밀번호 변경시에만 아래 로직을 타도록 함.
     if(user.isModified('password')){
         bcrypt.genSalt(saltRounds, function(err, salt) {
